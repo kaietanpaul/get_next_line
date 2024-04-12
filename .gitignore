@@ -50,3 +50,13 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Replit files
+replit.nix
+.replit
+*.blob
+main.c
+.ccls-cache
+
+# My temporary files
+main
