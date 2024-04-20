@@ -44,9 +44,9 @@ char	*ft_strdup(const char *str)
 	size_t	s_len;
 	size_t	i;
 
-	s_len = ft_strlen(str) + 1;
+	s_len = ft_strlen(str);
 	i = 0;
-	new_str = malloc(s_len);
+	new_str = malloc(s_len + 1);
 	if (new_str)
 	{
 		while (i < s_len)
@@ -57,8 +57,10 @@ char	*ft_strdup(const char *str)
 	}
 	else
 		return (NULL);
+	new_str[i] = '\0';
 	return (new_str);
 }
+
 char	*ft_substr(char const *str, unsigned int start, size_t len)
 {
 	size_t	s_len;
