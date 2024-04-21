@@ -65,7 +65,7 @@ char *get_next_line(int fd)
 int main(void) {
 	int fd;
 	char *line;
-	fd = open("newline.txt", O_RDONLY);
+	fd = open("text01.txt", O_RDONLY);
 	if (fd == -1) {
 		perror("Error opening file");
 		return 1;
