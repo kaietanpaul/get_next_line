@@ -68,6 +68,8 @@ char	*get_next_line(int fd)
 
 	line = NULL;
 	buff_read = 0;
+	if (BUFFER_SIZE <= 0 || fd < 0)
+		return (NULL);
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
@@ -83,19 +85,30 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int main(void)
-{
-	int fd;
-	char *line;
-	fd = open("nonl.txt", O_RDONLY);
-	if (fd == -1) {
-		perror("Error opening file");
-		return 1;
-	}
-	while ((line = get_next_line(fd)) != NULL) {
-		printf("%s\n", line);
-		free(line);
-	}
-	close(fd);
-	return 0;
-}
+// int main(int argc, char **argv)
+// {
+// 	int fd;
+// 	char *line;
+
+// 	if (argc > 1)
+// 	{
+// 		fd = open(argv[1], O_RDONLY);
+// 	}
+// 	else
+// 	{
+// 		fd = STDIN_FILENO;
+// 	}
+
+// 	while ((line = get_next_line(fd)) != NULL)
+// 	{
+// 		printf("Received line: %s", line);
+// 		free(line);
+// 	}
+
+// 	if (argc > 1)
+// 	{
+// 		close(fd);
+// 	}
+
+// 	return 0;
+// }
