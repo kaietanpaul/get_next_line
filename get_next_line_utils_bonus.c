@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kpaul <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/24 21:14:53 by kpaul             #+#    #+#             */
+/*   Updated: 2024/04/24 21:14:54 by kpaul            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line_bonus.h"
 
 int	ft_strlen(const char *str)
@@ -88,6 +100,8 @@ int	find_new_line(const char *str)
 {
 	int	i;
 
+	if (str == NULL)
+		return (-1);
 	i = 0;
 	while (str[i])
 	{

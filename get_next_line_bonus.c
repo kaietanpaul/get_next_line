@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kpaul <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/24 21:13:29 by kpaul             #+#    #+#             */
+/*   Updated: 2024/04/24 21:13:32 by kpaul            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line_bonus.h"
 
 static char	*add_buffer(char *dest, char *src)
@@ -40,7 +52,12 @@ static int	read_process_buff(int fd, char **temp, char *buffer, char **line)
 	int	buff_read;
 	int	i_nl;
 
-	i_nl = 0;
+	i_nl = find_new_line(*temp);
+	if (*temp && i_nl > -1)
+	{
+		*line = extract_line(temp, i_nl);
+		return (1);
+	}
 	buff_read = read(fd, buffer, BUFFER_SIZE);
 	if (buff_read > 0)
 	{

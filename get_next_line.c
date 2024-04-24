@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kpaul <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/24 15:49:42 by kpaul             #+#    #+#             */
+/*   Updated: 2024/04/24 15:49:44 by kpaul            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 static char	*add_buffer(char *dest, char *src)
@@ -40,17 +52,22 @@ static int	read_process_buff(int fd, char **temp, char *buffer, char **line)
 	int	buff_read;
 	int	i_nl;
 
-	i_nl = 0;
+	i_nl = find_new_line(*temp);
+	if (*temp && i_nl > -1)
+	{
+		*line = extract_line(temp, i_nl);
+		return (1);
+	}
 	buff_read = read(fd, buffer, BUFFER_SIZE);
 	if (buff_read > 0)
 	{
 		buffer[buff_read] = '\0';
-		if (*temp != NULL)
+		if (*temp)
 			*temp = add_buffer(*temp, buffer);
 		else
 			*temp = ft_strdup(buffer);
 		i_nl = find_new_line(*temp);
-		if (i_nl != -1)
+		if (i_nl > -1)
 		{
 			*line = extract_line(temp, i_nl);
 			return (1);
@@ -67,16 +84,15 @@ char	*get_next_line(int fd)
 	int			buff_read;
 
 	line = NULL;
-	buff_read = 0;
 	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
-	buffer = malloc(BUFFER_SIZE + 1);
+	buffer = (char *)malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
 	while (1)
 	{
 		buff_read = read_process_buff(fd, &temp, buffer, &line);
-		if (line != NULL || buff_read <= 0)
+		if (line || buff_read <= 0)
 			break ;
 	}
 	if (buff_read == 0 && temp && *temp != '\0')
@@ -85,30 +101,27 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-// int main(int argc, char **argv)
+// int main(void)
 // {
 // 	int fd;
 // 	char *line;
+// 	fd = open("nonl.txt", O_RDONLY);
+// 	line = get_next_line(fd);
+// 	printf("line:%s\n", line);
+// 	free(line);
+// 	line = get_next_line(fd);
+// 	printf("line:%s\n", line);
+// 	free(line);
+// 	line = get_next_line(fd);
+// 	printf("line:%s\n", line);
+// 	free(line);
+// 	line = get_next_line(fd);
+// 	printf("line:%s\n", line);
+// 	free(line);
+// 	line = get_next_line(fd);
+// 	printf("line:%s\n", line);
+// 	free(line);
 
-// 	if (argc > 1)
-// 	{
-// 		fd = open(argv[1], O_RDONLY);
-// 	}
-// 	else
-// 	{
-// 		fd = STDIN_FILENO;
-// 	}
-
-// 	while ((line = get_next_line(fd)) != NULL)
-// 	{
-// 		printf("Received line: %s", line);
-// 		free(line);
-// 	}
-
-// 	if (argc > 1)
-// 	{
-// 		close(fd);
-// 	}
-
+// 	close(fd);
 // 	return 0;
 // }
